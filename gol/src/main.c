@@ -32,9 +32,6 @@ void render_text(
     rect->y = y;
     rect->w = surface->w;
     rect->h = surface->h;
-    /* This is wasteful for textures that stay the same.
-     * But makes things less stateful and easier to use.
-     * Not going to code an atlas solution here... are we? */
     SDL_FreeSurface(surface);
     SDL_RenderCopy(renderer, texture, NULL, rect);
     SDL_DestroyTexture(texture);
@@ -44,7 +41,7 @@ int main( int argc, char* argv[] )
 {
     srand((unsigned)time(NULL));
 
-	SDL_Window *window;
+    SDL_Window *window;
     SDL_Renderer *renderer;
     SDL_Texture *texture[2];
 
@@ -74,12 +71,6 @@ int main( int argc, char* argv[] )
 
     for (int i = 0; i < 2; ++i) {
         cells[i] = (Uint32*)malloc(sizeof(Uint32) * WINDOW_WIDTH * WINDOW_HEIGHT);
-        // Randomly initialize cells (modify probability as desired)
-        // for (int y = 0; y < WINDOW_HEIGHT; ++y) {
-        //     for (int x = 0; x < WINDOW_WIDTH; ++x) {
-        //         cells[i][y * WINDOW_WIDTH + x] = rand() % 100 < 70 ? ALIVE : DEAD;
-        //     }
-        // }
     }
     // int gosper_glider_gun[9][36] = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
     //                                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0},
